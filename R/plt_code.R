@@ -20,11 +20,11 @@ plt_code <- function(x){
       vcodings$envs[i] <- env
     }
     vcodings <- cbind(vcodings, 
-                      ldply(vcodings$envs, function(x) unlist(strsplit(x, split = ""))))
+                      plyr:ldply(vcodings$envs, function(x) unlist(strsplit(x, split = ""))))
   }else{
     vcodings <- data.frame(VClass = x, envs = "00000",stringsAsFactors=F)
     vcodings <- cbind(vcodings, 
-                      ldply(vcodings$envs, function(x) unlist(strsplit(x, split = ""))))
+                      plyr::ldply(vcodings$envs, function(x) unlist(strsplit(x, split = ""))))
   }
   
   colnames(vcodings) <- c("VClass","envs", "Manner","Place","Voice","PreSeg","FolSeq")

@@ -5,10 +5,9 @@
 \title{
 This is a set of tools for working with the output of FAVE.
 }
-%\description{
-%More about what it does (maybe more than one line)
-%~~ A concise (1-5 lines) description of the package ~~
-%}
+\description{
+Right now, FAVErtools only contains scripts for reading in plotnik files.
+}
 \details{
 \tabular{ll}{
 Package: \tab FAVE_rtools\cr

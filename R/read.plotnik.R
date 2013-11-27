@@ -23,7 +23,7 @@ read.plotnik <- function(file){
     to.compile[[i]] <- bits
   }
     
-  out <- ldply(to.compile, function(x)unlist(strsplit(x[1], split = ",")))
+  out <- plyr::ldply(to.compile, function(x)unlist(strsplit(x[1], split = ",")))
   colnames(out) <- c("F1","F2","F3","VCoding","Dur_Stress","Info")
   
   out$Word <- suppressWarnings(reshape2::colsplit(out$Info, pattern = " ", names = "Word")$Word)
