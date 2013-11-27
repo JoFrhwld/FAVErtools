@@ -1,4 +1,4 @@
-Package: FAVE_rtools
+Package: FAVErtools
 Type: Package
 Title: A set of R tools for working with FAVE results
 Version: 1.0
@@ -6,4 +6,5 @@ Date: 2013-11-27
 Author: Josef Fruehwald
 Maintainer: Josef Fruehwald <jofrhwld@gmail.com>
 Description: A set of R tools for working with FAVE results
-License: What license is it under?
+Imports: plyr, reshape2
+License: MIT
