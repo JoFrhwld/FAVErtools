@@ -41,5 +41,9 @@ plt_vowels <- function(x){
     `74` = "uwr",
     `94` = "*hr"
   )
-  vowels <- vowel.codes[as.character(x)]
+  if(is.numeric(x)){
+    x <- floor(x)
+  }
+  vowels <- vclass.codes[as.character(x)]
+  return(vowels)
 }

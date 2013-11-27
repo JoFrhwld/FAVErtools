@@ -52,90 +52,13 @@ read.plotnik <- function(file){
   }
   
   colnames(vcodings) <- c("VClass","envs", "Manner","Place","Voice","PreSeg","FolSeq")
-  
-  vclass.codes = c(
-     `1` = "i",
-     `2` = "e",
-     `3` = "ae",
-     `5` = "o",
-     `6` = "uh",
-     `7` = "u",
-     `*` = "*",
-     `11` = "iy",
-     `12` = "iyF",
-     `21` = "ey",
-     `22` = "eyF",
-     `41` = "ay",
-     `47` = "ay0",
-     `61` = "oy",
-     `42` = "aw",
-     `62` = "ow",
-     `63` = "owF",
-     `72` = "uw",
-     `73` = "Tuw",
-     `82` = "iw",
-     `33` = "aeh",
-     `39` = "aeBR",
-     `43` = "ah",
-     `53` = "oh",
-     `14` = "iyr",
-     `24` = "eyr",
-     `44` = "ahr",
-     `54` = "ohr",
-     `64` = "owr",
-     `74` = "uwr",
-     `94` = "*hr"
-  )
-  
-  manner.codes = c(
-    `1` = "stop",
-    `2` = "affricate",
-    `3` = "fricative",
-    `4` = "nasal",
-    `5` = "lateral",
-    `6` = "central"
-  )
-  
-  place.codes = c(
-    `1` = "labial",
-    `2` = "labiodental",
-    `3` = "interdental",
-    `4` = "apical",
-    `5` = "palatal",
-    `6` = "velar"
-  )
-  
-  voice.codes = c(
-    `1` = "voiceless",
-    `2` = "voiced"
-  )
-  
-  preseg.codes = c(
-    `1` = "oral labial",
-    `2` = "nasal labial",
-    `3` = "oral apical",
-    `4` = "nasal apical",
-    `5` = "palatal",
-    `6` = "velar",
-    `7` = "liquid",
-    `8` = "obstruent liquid",
-    `9` = "w/y"
-  )
-  
-  folseq.codes = c(
-    `1` = "one_fol_syll",
-    `2` = "two_fol_syl",
-    `3` = "complex_coda",
-    `4` = "complex_one_syl",
-    `5` = "complex_two_syl"
-  )
-  
-  vcodings$VClass <- as.factor(vclass.codes[vcodings$VClass])
-  vcodings$Manner <- as.factor(manner.codes[vcodings$Manner])
-  vcodings$Place <- as.factor(place.codes[vcodings$Place])
-  vcodings$Voice <- as.factor(voice.codes[vcodings$Voice])
-  vcodings$PreSeg <- as.factor(preseg.codes[vcodings$PreSeg])
-  vcodings$FolSeq <- as.factor(folseq.codes[vcodings$FolSeq])
+    
+  vcodings$VClass <- plt_vowels(vcodings$VClass)
+  vcodings$Manner <- plt_manner(vcodings$Manner)
+  vcodings$Place  <- plt_place(vcodings$Place)
+  vcodings$Voice  <- plt_voice(vcodings$Voice)
+  vcodings$PreSeg <- plt_preseg(vcodings$PreSeg)
+  vcodings$FolSeq <- plt_folseq(vcodings$FolSeq)
   
   out <- cbind(out, vcodings[,-2])
   

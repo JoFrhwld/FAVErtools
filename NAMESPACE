@@ -1,1 +1,2 @@
-exportPattern("^[[:alpha:]]+")
+export(plt_vowels)
+export(read.plotnik)
