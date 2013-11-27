@@ -20,7 +20,7 @@ plt_code <- function(x){
       vcodings$envs[i] <- env
     }
     vcodings <- cbind(vcodings, 
-                      plyr:ldply(vcodings$envs, function(x) unlist(strsplit(x, split = ""))))
+                      plyr::ldply(vcodings$envs, function(x) unlist(strsplit(x, split = ""))))
   }else{
     vcodings <- data.frame(VClass = x, envs = "00000",stringsAsFactors=F)
     vcodings <- cbind(vcodings, 
