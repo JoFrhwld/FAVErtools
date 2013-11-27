@@ -9,6 +9,6 @@
 }
 \description{
   \code{read.plotik()} will read plotnik files as generated
-  by FAVE-align.
+  by FAVE-extract.
 }
 
