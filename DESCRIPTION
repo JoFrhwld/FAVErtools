@@ -6,5 +6,7 @@ Date: 2013-11-27
 Author: Josef Fruehwald
 Maintainer: Josef Fruehwald <jofrhwld@gmail.com>
 Description: A set of R tools for working with FAVE results
-Imports: plyr, reshape2
+Imports: 
+  plyr, 
+  reshape2
 License: MIT
