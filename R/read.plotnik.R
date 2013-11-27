@@ -12,18 +12,20 @@ read.plotnik <- function(file){
   filename <- rev(unlist(strsplit(file, split = "/")))[1]
   
   header.info <- data[1]
-  for(i in 3:length(data)){
-    if(nchar(data[[i]]) <= 1){
-      break
-    }
-    data[[i]] <- paste(data[[i]], header.info, sep = ",")
+  
+  last <- (which(unlist(lapply(data, nchar))==0)-1)
+  n <- last-3
+  data <- data[3:last]
+  to.compile <- vector(mode = "list", length = n)
+  
+  for(i in 1:n){
+    bits <- unlist(strsplit(gsub("[<>]", "", data[[i]]), split = "  "))
+    to.compile[[i]] <- bits
   }
+    
+  out <- ldply(to.compile, function(x)unlist(strsplit(x[1], split = ",")))
+  colnames(out) <- c("F1","F2","F3","VCoding","Dur_Stress","Info")
   
-  len <- (i-1)-2
-  
-  to.compile <- data[3:(i-1)]
-  out <- ldply(to.compile, function(x) unlist(strsplit(x, split = ",")))
-  colnames(out) <- c(c("F1","F2","F3","VCoding","Dur_Stress","Info"), paste("V",7:ncol(out), sep = ""))
   out$Word <- suppressWarnings(reshape2::colsplit(out$Info, pattern = " ", names = "Word")$Word)
   if(length(grep("\\.", out$Dur_Stress)) > 0){
 	  out <- cbind(out, reshape2::colsplit(out$Dur_Stress, pattern = "\\.", names = c("Stress","Dur_msec")))
@@ -31,48 +33,22 @@ read.plotnik <- function(file){
   }else{
       out$Stress <- as.numeric(out$Dur_Stress)	
   }
- 
-  out$VCoding <- as.character(out$VCoding)
   
-  if(length(grep("\\.", out$VCoding)) > 0){
-  	vcodings <- data.frame(VClass = gsub("\\..*","",out$VCoding), envs = gsub(".*\\.","",out$VCoding),stringsAsFactors=F)
-  	for(i in 1:nrow(vcodings)){
-  		env <- vcodings$envs[i]
-  		while(nchar(env) < 5){
-  			env <- paste(env, "0", sep = "")	
-  		}
-  		vcodings$envs[i] <- env
-  	}
-  vcodings <- cbind(vcodings, 
-                    ldply(vcodings$envs, function(x) unlist(strsplit(x, split = ""))))
-  }else{
-	vcodings <- data.frame(VClass = out$VCoding, envs = "00000",stringsAsFactors=F)
-	vcodings <- cbind(vcodings, 
-                    ldply(vcodings$envs, function(x) unlist(strsplit(x, split = ""))))
-  }
-  
-  colnames(vcodings) <- c("VClass","envs", "Manner","Place","Voice","PreSeg","FolSeq")
-    
-  vcodings$VClass <- plt_vowels(vcodings$VClass)
-  vcodings$Manner <- plt_manner(vcodings$Manner)
-  vcodings$Place  <- plt_place(vcodings$Place)
-  vcodings$Voice  <- plt_voice(vcodings$Voice)
-  vcodings$PreSeg <- plt_preseg(vcodings$PreSeg)
-  vcodings$FolSeq <- plt_folseq(vcodings$FolSeq)
+  vcodings <- plt_code(out$VCoding)
   
   out <- cbind(out, vcodings[,-2])
   
-#   out$Time <- 0
-#   for(i in 1:nrow(out)){
-#   	timestr <- rev(unlist(strsplit(out$Info[i], " ")))[1]
-#   	out$Time[i] <- as.numeric(timestr)
-#   }
+  out$Time <- 0
+  for(i in 1:nrow(out)){
+  	timestr <- rev(unlist(strsplit(out$Info[i], " ")))[1]
+  	out$Time[i] <- as.numeric(timestr)
+  }
   
   out$F1 <- as.numeric(out$F1)
   out$F2 <- as.numeric(out$F2)
   out$F3 <- as.numeric(out$F3)
-  out$Stress <- as.factor(out$Stress)
-  out$Word <- as.factor(out$Word)
+  out$Stress <- as.character(out$Stress)
+  out$Word <- as.character(out$Word)
   if(length(grep("\\[f\\]", out$Info)) > 0){
     out$Function <- FALSE
     out[grep("\\[f\\]", out$Info),]$Function <- TRUE
@@ -80,6 +56,18 @@ read.plotnik <- function(file){
   
   out$File <- filename
   
+  
+  if(length(to.compile[[1]]) > 1){
+    tracks <- ldply(to.compile, function(x)unlist(strsplit(x[2], split = ",")))
+    if(ncol(tracks)%%2 != 0){
+      break
+    }
+    colnames(tracks) <- paste(rep(c("F1","F2"), ncol(tracks)/2), 
+                              rep(1:(ncol(tracks)/2), each = 2), sep = "_")
+    out <- cbind(out,tracks)
+  }
+  
+  out <- cbind(data.frame(rbind(unlist(strsplit(header.info, split=",")))), out)
   return(out)
 }
 
