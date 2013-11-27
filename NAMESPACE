@@ -1,2 +1,7 @@
+export(plt_folseq)
+export(plt_manner)
+export(plt_place)
+export(plt_preseg)
+export(plt_voice)
 export(plt_vowels)
 export(read.plotnik)
