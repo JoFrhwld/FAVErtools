@@ -1,6 +1,7 @@
 #' Turns a Plotnik numerical code into a readaable data frame
 #' 
 #' @param x a vector containing plotnik numeric codes.
+#' @return A data frame.
 #' 
 #' @export
 #' @import plyr

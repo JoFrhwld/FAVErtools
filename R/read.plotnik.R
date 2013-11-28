@@ -4,9 +4,14 @@
 #' 
 #' @param file A plotnik file to be read in
 #' 
+#' @return A data frame
+#' 
 #' @export
 #' @import plyr
 #' @import reshape2
+#' 
+#' @examples
+#' \dontrun{frueh <- read.plotnik("inst/PH06-2-A-JosefFruehwald.plt")}
 
 
 read.plotnik <- function(file){
@@ -18,17 +23,24 @@ read.plotnik <- function(file){
   last <- (which(unlist(lapply(data, nchar))==0)-1)
   n <- last-3
   data <- data[3:last]
-  to.compile <- vector(mode = "list", length = n)
-  
-  for(i in 1:n){
-    bits <- unlist(strsplit(gsub("[<>]", "", data[[i]]), split = "  "))
-    to.compile[[i]] <- bits
-  }
-    
+
+  to.compile <- llply(data, function(x)unlist(strsplit(gsub("[<>]", "", x), split = "  ")))
+      
   out <- ldply(to.compile, function(x)unlist(strsplit(x[1], split = ",")))
   colnames(out) <- c("F1","F2","F3","VCoding","Dur_Stress","Info")
   
-  out$Word <- suppressWarnings(reshape2::colsplit(out$Info, pattern = " ", names = "Word")$Word)
+  infos <- strsplit(out$Info, split=" ")
+  no_marks <- which(sapply(infos, length)==3)
+  for(i in no_marks){
+    infos[[i]] <- c(infos[[i]][1], NA, infos[[i]][2:3])
+  }
+  infos_df <- ldply(llply(infos, rbind), data.frame,stringsAsFactors=F)
+  colnames(infos_df) <- c("Word","Mark","Style","Time")
+  infos_df$Time <- as.numeric(infos_df$Time)
+  
+  out <- cbind(out, infos_df)
+  
+  
   if(length(grep("\\.", out$Dur_Stress)) > 0){
 	  out <- cbind(out, reshape2::colsplit(out$Dur_Stress, pattern = "\\.", names = c("Stress","Dur_msec")))
 	  out$Dur_msec <- as.numeric(out$Dur_msec)
@@ -39,13 +51,7 @@ read.plotnik <- function(file){
   vcodings <- plt_code(out$VCoding)
   
   out <- cbind(out, vcodings[,-2])
-  
-  out$Time <- 0
-  for(i in 1:nrow(out)){
-  	timestr <- rev(unlist(strsplit(out$Info[i], " ")))[1]
-  	out$Time[i] <- as.numeric(timestr)
-  }
-  
+    
   out$F1 <- as.numeric(out$F1)
   out$F2 <- as.numeric(out$F2)
   out$F3 <- as.numeric(out$F3)
@@ -57,7 +63,6 @@ read.plotnik <- function(file){
   }
   
   out$File <- filename
-  
   
   if(length(to.compile[[1]]) > 1){
     tracks <- ldply(to.compile, function(x)unlist(strsplit(x[2], split = ",")))
