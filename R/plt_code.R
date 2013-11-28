@@ -3,6 +3,7 @@
 #' @param x a vector containing plotnik numeric codes.
 #' 
 #' @export
+#' @import plyr
 
 
 plt_code <- function(x){

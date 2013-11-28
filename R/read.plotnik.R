@@ -5,6 +5,8 @@
 #' @param file A plotnik file to be read in
 #' 
 #' @export
+#' @import plyr
+#' @import reshape2
 
 
 read.plotnik <- function(file){
