@@ -6,7 +6,6 @@
 #' @export
 #' @import plyr
 
-
 plt_code <- function(x){
   x <- as.character(x)
   
