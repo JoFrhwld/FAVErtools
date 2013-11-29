@@ -25,6 +25,8 @@ Reading in the plotnik file is as simple as:
 Also included in the package are a number of `plt_*` functions, which translate plotnik codes into readable codes.
 The procedure for reading in a FAVE text output is also documented in `?FAVErtools`:
 
+    frueh_fave_path <- system.file("extdata", "PH06-2-A-JosefFruehwald.txt",package = "FAVErtools")
+
     header <- scan(frueh_fave_path, nmax = 1,what = "list", sep = "\n")
     frueh_fave_df <- read.delim(frueh_fave_path, skip = 2)
      
