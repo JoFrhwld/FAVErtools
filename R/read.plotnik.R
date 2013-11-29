@@ -32,14 +32,9 @@
 #' @import reshape2
 #' 
 #' @examples
-#' \dontrun{
 #' # get path to a plotnik file bundled with the package
-#' frueh_path <- file.path(.libPaths()[1], 
-#'                            "FAVErtools",
-#'                                "extdata",
-#'                                    "PH06-2-A-JosefFruehwald.plt")
+#' frueh_path <- system.file("extdata","PH06-2-A-JosefFruehwald.plt", package = "FAVErtools")
 #' frueh <- read.plotnik(frueh_path)
-#' }
 
 
 read.plotnik <- function(file){
