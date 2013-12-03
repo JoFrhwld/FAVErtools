@@ -5,7 +5,17 @@ Date: 2013-11-27
 Author: Josef Fruehwald
 Maintainer: Josef Fruehwald <jofrhwld@gmail.com>
 Description: A set of R tools for working with FAVE results.
-Imports: 
+Imports:
     plyr,
     reshape2
 License: MIT
+Collate:
+    'FAVErtools-package.R'
+    'plt_code.R'
+    'plt_folseq.R'
+    'plt_manner.R'
+    'plt_place.R'
+    'plt_preseg.R'
+    'plt_voice.R'
+    'plt_vowels.R'
+    'read.plotnik.R'

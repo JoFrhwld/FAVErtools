@@ -94,6 +94,7 @@ read.plotnik <- function(file){
     }
     colnames(tracks) <- paste(rep(c("F1","F2"), ncol(tracks)/2), 
                               rep(1:(ncol(tracks)/2), each = 2), sep = "_")
+    tracks <- data.frame(llply(tracks, as.numeric))
     out <- cbind(out,tracks)
   }
   
