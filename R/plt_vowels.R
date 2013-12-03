@@ -14,7 +14,7 @@
 #' header <- scan(frueh_path, nmax = 1,what = "list", sep = "\n")
 #' 
 #' frueh <- read.delim(frueh_path, skip = 2) 
-#' frueh$VClass <- plt_folseq(frueh$cd)
+#' frueh$VClass <- plt_vowels(frueh$cd)
 
 plt_vowels <- function(x){
   vclass.codes = c(

@@ -23,6 +23,6 @@ frueh_path <- system.file("extdata","PH06-2-A-JosefFruehwald.txt", package = "FA
 header <- scan(frueh_path, nmax = 1,what = "list", sep = "\\n")
 
 frueh <- read.delim(frueh_path, skip = 2)
-frueh$VClass <- plt_folseq(frueh$cd)
+frueh$VClass <- plt_vowels(frueh$cd)
 }
 
