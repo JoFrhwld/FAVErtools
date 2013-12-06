@@ -15,10 +15,10 @@
 
 plt_preseg <- function(x){
   preseg.codes = c(
-    `1` = "oral labial",
-    `2` = "nasal labial",
-    `3` = "oral apical",
-    `4` = "nasal apical",
+    `1` = "oral_labial",
+    `2` = "nasal_labial",
+    `3` = "oral_apical",
+    `4` = "nasal_apical",
     `5` = "palatal",
     `6` = "velar",
     `7` = "liquid",
