@@ -22,7 +22,7 @@ plt_preseg <- function(x){
     `5` = "palatal",
     `6` = "velar",
     `7` = "liquid",
-    `8` = "obstruent liquid",
+    `8` = "obstruent_liquid",
     `9` = "w/y"
   )  
   preseg <- preseg.codes[as.character(x)]
